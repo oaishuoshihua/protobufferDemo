@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sodyu.learn</groupId>
+    <artifactId>protobuffer-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <logback_version>1.2.3</logback_version>
+        <slf_version>1.7.25</slf_version>
+        <protostuff_version>1.5.2</protostuff_version>
+        <junit_version>4.10</junit_version>
+        <protobuf.version>3.4.0</protobuf.version>
+        <grpc.version>1.7.0</grpc.version>
+    </properties>
+    <dependencies>
+        <!-- protostuff start-->
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff_version}</version>
+        </dependency>
+        <!-- protostuff end-->
+
+
+        <!-- logback start-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback_version}</version>
+        </dependency>
+        <!-- logback end-->
+
+        <!-- junit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.38</version>
+        </dependency>
+        <!--使用原生protobuf的第一种方式 -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+
+         <!--&lt;!&ndash;使用原生protobuf的第二种方式 start&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>io.grpc</groupId>-->
+            <!--<artifactId>grpc-all</artifactId>-->
+            <!--<version>${grpc.version}</version>-->
+        <!--</dependency>-->
+         <!--&lt;!&ndash;使用原生protobuf的第二种方式 end&ndash;&gt;-->
+    </dependencies>
+
+
+    <build>
+        <!--&lt;!&ndash; 使用原生protobuf的第二种方式 start&ndash;&gt;-->
+        <!--<extensions>-->
+            <!--<extension>-->
+                <!--<groupId>kr.motd.maven</groupId>-->
+                <!--<artifactId>os-maven-plugin</artifactId>-->
+                <!--<version>1.5.0.Final</version>-->
+            <!--</extension>-->
+        <!--</extensions>-->
+        <!-- 使用原生protobuf的第二种方式 end-->
+        <plugins>
+            <!-- 使用原生protobuf第一种插件方式 start-->
+            <plugin>
+                <!-- 这种方式使用是在安装protobuf的前提下-->
+                <groupId>com.github.igor-petruk.protobuf</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <inputDirectories>
+                        <!-- 默认路径为 src/main/protobuf-->
+                        <inputDirectory>src/main/java/com/sodyu/learn/protobufferdemo/proto</inputDirectory>
+                    </inputDirectories>
+                    <!--／usr/local/bin/protoc 是protobuf命令安装的地址 -->
+                    <protocCommand>/usr/local/bin/protoc</protocCommand>
+                    <outputDirectory>
+                        src/main/java/com/sodyu/learn/protobufferdemo/protomodels/
+                    </outputDirectory>
+                </configuration>
+            </plugin>
+            <!-- 使用原生protobuf第一种插件方式 end-->
+
+            <!--&lt;!&ndash;protobuf插件 需要下载很长时间，放弃了 只是想生成文件，不打算看grpc  &ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>org.xolstice.maven.plugins</groupId>-->
+                <!--<artifactId>protobuf-maven-plugin</artifactId>-->
+                <!--<version>0.5.0</version>-->
+                <!--<configuration>-->
+                    <!--<protocArtifact>-->
+                        <!--com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}-->
+                    <!--</protocArtifact>-->
+                    <!--<pluginId>grpc-java</pluginId>-->
+                    <!--<pluginArtifact>-->
+                        <!--io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}-->
+                    <!--</pluginArtifact>-->
+                    <!--<inputDirectories>-->
+                    <!--<inputDirectory>src/main/java/com/sodyu/learn/protobufferdemo/proto</inputDirectory>-->
+                    <!--</inputDirectories>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>compile</goal>-->
+                            <!--<goal>compile-custom</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+</project>

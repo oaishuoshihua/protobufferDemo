@@ -1,0 +1,17 @@
+syntax = 'proto3';
+//package com.sodyu.learn.protobufferdemo.protomodels;
+import public "Address.proto";
+//option java_package = 'com.sodyu.learn.protobufferdemo.protomodels';
+option java_outer_classname = "PersonModel";
+
+message Person {
+
+string name = 1;
+
+string gender = 2;
+
+int32    age=3;
+
+Address address=4;
+
+}

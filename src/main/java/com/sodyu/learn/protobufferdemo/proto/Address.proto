@@ -1,0 +1,11 @@
+syntax = "proto3";
+//package com.sodyu.learn.protobufferdemo.protomodels;
+//option java_package = 'com.sodyu.learn.protobufferdemo.protomodels';
+option java_outer_classname = "AddressModel";
+message Address {
+
+    string country = 1;
+
+    string city = 2;
+
+}

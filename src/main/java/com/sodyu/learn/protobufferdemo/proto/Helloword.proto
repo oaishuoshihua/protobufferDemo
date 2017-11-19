@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_outer_classname = "HelloWorldModel";
+message HelloWorldRequest {
+    string name = 1;
+}
+
+message HelloWorldResponse{
+    string response=1;
+}
